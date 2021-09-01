@@ -1,0 +1,7 @@
+<resources>
+  <string name="app_name">Simple Wi-Fi Logger</string>
+  <string name="action_settings">Settings</string>
+  <string name="main_button_start">Start logging</string>
+  <string name="main_button_stop">Stop logging</string>
+  
+</resources>
