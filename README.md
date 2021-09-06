@@ -19,7 +19,8 @@
 * [для начинающих разработчиков]: не перегруженный пример использования множества API Android (например, `LocalBroadcastManager`, который был использован как раз для примера, что, в основном некорректно и лучше использовать bind to service, примеров для которого больше)
 
 Интерфейс программы:
-![Скриншот окна программы](https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/screenshot.png)
+
+<img src="https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/screenshot.jpg" width="384" alt="Скриншот окна программы">
 
 ### Полный список полей лога
 Информация о точке доступа:
@@ -63,7 +64,8 @@
 
 <details>
   <summary>Пример лога, сгенерированного Simple Wi-Fi Logger</summary>
-```
+
+  ```
 Date; BSSID; Level (dbm); Level-based distance (m); RTT distance (mm); Standart; Frequrency (MHz); SSID; Security; Passpoint venue name; Passpoint operators name; GPS latitude (deg); GPS longtitude (deg); GPS radial accuracy (m); GPS altitude (m, WGS84); GPS vertical accuracy (m); GPS speed (m/s); GPS speed accuracy (m/s); Network latitude (deg); Network longtitude (deg); Network radial accuracy (m); Network altitude (m, WGS84); Network vertical accuracy (m); Network speed (m/s); Network speed accuracy (m/s)
 2021.09.03 13:45:03.7; 74:DA:88:05:F0:EA; -73; 43,2725; unsupported; Unknown; 2462; Hoom; [WPA2-PSK-CCMP][ESS][WPS]; ; ; 56,4856577100521; 84,9820611074678; 6; 143,800007911746; -1; 7,969193; -1; null; null; null; null; null; null; null
 2021.09.03 13:45:03.7; 30:5A:3A:B6:C3:99; -76; 62,26204; unsupported; Unknown; 2417; pizza_puzzle; [WPA2-PSK-CCMP][ESS]; ; ; 56,4856577100521; 84,9820611074678; 6; 143,800007911746; -1; 7,969193; -1; null; null; null; null; null; null; null
@@ -1160,7 +1162,7 @@ Date; BSSID; Level (dbm); Level-based distance (m); RTT distance (mm); Standart;
 2021.09.03 13:48:23.8; 04:BF:6D:37:5C:56; -86; 196,0786; unsupported; Unknown; 2427; Troll; [WPA2-PSK-CCMP][ESS][WPS]; ; ; 56,4857071536705; 84,9822862848726; 16; 140,555927398623; -1; 1,192167; -1; 56,485617349711504; 84,9824955; 25,508; 135,599990844727; 1,333333; -1; -1
 2021.09.03 13:48:23.8; 38:17:66:95:C8:C9; -86; 193,6845; unsupported; Unknown; 2457; FTTX95C8C9; [WPA-PSK-TKIP+CCMP][WPA2-PSK-TKIP+CCMP][ESS][WPS]; ; ; 56,4857071536705; 84,9822862848726; 16; 140,555927398623; -1; 1,192167; -1; 56,485617349711504; 84,9824955; 25,508; 135,599990844727; 1,333333; -1; -1
 2021.09.03 13:48:23.8; 20:E8:82:D5:B5:73; -90; 306,3458; unsupported; Unknown; 2462; Goblin; [WPA-PSK-TKIP+CCMP][WPA2-PSK-TKIP+CCMP][ESS][WPS]; ; ; 56,4857071536705; 84,9822862848726; 16; 140,555927398623; -1; 1,192167; -1; 56,485617349711504; 84,9824955; 25,508; 135,599990844727; 1,333333; -1; -1
-```
+  ```
 </details>
 
 Теперь для приведённого примера данных применим небольшой парсер-анализатор данных.
@@ -1193,7 +1195,8 @@ Date; BSSID; Level (dbm); Level-based distance (m); RTT distance (mm); Standart;
 
 <details>
   <summary>Пример кода парсера-анализатора</summary>
-```python
+  
+  ```python
 from datetime import datetime
 
 with open('log_0_.csv', 'r', encoding="utf-8") as file:
@@ -1267,7 +1270,7 @@ print()
 print("Closest AP (2.4) name: " + closest_ap_name)
 print("Closest AP (2.4) distance: " + str(closest_ap_distance))
 print("Closest AP (2.4) time: " + str(closest_ap_time))
-```
+  ```
 </details>
 
 Приведённый в пример парсер на приведённом в пример логе выдаёт следующий результат:
