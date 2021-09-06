@@ -220,14 +220,14 @@ namespace Simple_Wi_Fi_Logger {
                 }
                 storage_path = folder_path + "/";
                 
-                file = new StreamWriter(storage_path + "log_" + counter + "_.csv", false);
+                file = new StreamWriter(storage_path + "log_" + counter + "_.csv", false, System.Text.Encoding.UTF8);
                 file.WriteLine("Date; " +
                      "BSSID; " +
                      "Level (dbm); " +
                      "Level-based distance (m); " +
                      "RTT distance (mm); " +
                      "Standart; " +
-                     "Frequrency; " +
+                     "Frequrency (MHz); " +
                      "SSID; " +
                      "Security; " +
                      "Passpoint venue name; " +
@@ -244,14 +244,14 @@ namespace Simple_Wi_Fi_Logger {
             public void NewFile() {
                 file.Close();
 
-                file = new StreamWriter(storage_path + "log_" + ++counter + "_.csv", false);
+                file = new StreamWriter(storage_path + "log_" + ++counter + "_.csv", false, System.Text.Encoding.UTF8);
                 file.WriteLine("Date; " +
                      "BSSID; " +
                      "Level (dbm); " +
                      "Level-based distance (m); " +
                      "RTT distance (mm); " +
                      "Standart; " +
-                     "Frequrency; " +
+                     "Frequrency (MHz); " +
                      "SSID; " +
                      "Security; " +
                      "Passpoint venue name; " +
