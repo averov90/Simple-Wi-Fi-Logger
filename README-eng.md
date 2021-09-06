@@ -1166,6 +1166,7 @@ Date; BSSID; Level (dbm); Level-based distance (m); RTT distance (mm); Standart;
 
 Now let's use a small data parser for the given sample data.
 For the convenience of accessing the required log field, I use a numbered list of fields:
+
 0. Date
 1. BSSID
 2. Level (dbm)
