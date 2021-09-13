@@ -1,5 +1,5 @@
 # Simple Wi-Fi Logger
-[![License](https://img.shields.io/badge/LICENSE-GPL%20v3.0-green?style=flat-square)](/LICENSE)  [![Version](https://img.shields.io/badge/VERSION-RELEASE%20--%201.0-green?style=flat-square)](https://github.com/averov90/Simple-Wi-Fi-Logger/releases)
+[![License](https://img.shields.io/badge/LICENSE-GPL%20v3.0-green?style=flat-square)](/LICENSE)  [![Version](https://img.shields.io/badge/VERSION-RELEASE%20--%201.1-green?style=flat-square)](https://github.com/averov90/Simple-Wi-Fi-Logger/releases)
 ### :small_orange_diamond: [Русская версия](/README.md)
 
 This program is a tool for capturing and saving a list of Wi-Fi access points visible by a device running Android 5.0 - 11.0+.
@@ -61,17 +61,17 @@ It is important to understand that scanning for available networks does not occu
 ### Troubleshooting
 If you encounter an error message similar to the one shown in the screenshot below, this section provides a solution to the problem.
 
-<img src="https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/screenshot_error.jpg" width="192" alt = "Screenshot of the program window with a error">
+<img src="https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/screenshot_error.jpg" width="256" alt = "Screenshot of the program window with a error">
 
 For the application to work, you need to give it some permissions, such as access to storage (SD card) as well as location. The program does not transfer this data anywhere - you can be sure of this since its source code is open. *If you need to remove location data from the log, you can do this at the stage of further processing the log (with a parser program).*
 
-If some of the permissions are not granted, you will see a pop-up message like in one of the screenshots. The message that appears will list all the permissions necessary for the operation, namely:
+If some of the permissions are not granted, you will see a pop-up message like in the screenshot above. The message that appears will list all the permissions necessary for the operation, namely:
 
-1. android.permission.READ_EXTERNAL_STORAGE
-2. android.permission.WRITE_EXTERNAL_STORAGE
-3. android.permission.ACCESS_COARSE_LOCATION
-4. android.permission.ACCESS_FINE_LOCATION
-5. android.permission.ACCESS_BACKGROUND_LOCATION
+1. READ_EXTERNAL_STORAGE
+2. WRITE_EXTERNAL_STORAGE
+3. ACCESS_COARSE_LOCATION
+4. ACCESS_FINE_LOCATION
+5. ACCESS_BACKGROUND_LOCATION
 
 If you see message 1 or 2, you need to grant the program access to the storage (SD card). If you see messages 3 or 4, you need to give the program access to the location. If you see message 5, you need to give the program permission to locate the device in background.
 

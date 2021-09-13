@@ -1,5 +1,5 @@
 # Simple Wi-Fi Logger
-[![License](https://img.shields.io/badge/LICENSE-GPL%20v3.0-green?style=flat-square)](/LICENSE)  [![Version](https://img.shields.io/badge/VERSION-RELEASE%20--%201.0-green?style=flat-square)](https://github.com/averov90/Simple-Wi-Fi-Logger/releases)
+[![License](https://img.shields.io/badge/LICENSE-GPL%20v3.0-green?style=flat-square)](/LICENSE)  [![Version](https://img.shields.io/badge/VERSION-RELEASE%20--%201.1-green?style=flat-square)](https://github.com/averov90/Simple-Wi-Fi-Logger/releases)
 ### :small_orange_diamond: [English version](/README-eng.md)
 
 Данная программа представляет из себя инструмент захвата и сохранения списка точек доступа Wi-Fi, видимых устройством с операционной системой Android 5.0 - 11.0+.
@@ -61,17 +61,17 @@
 ### Решение проблем
 Если вы столкнулись с сообщением об ошибке, похожим на то, что изображено на скриншоте ниже, в этом разделе находится решение проблемы.
 
-<img src="https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/screenshot_error.jpg" width="192" alt="Скриншот окна программы с ошибкой">
+<img src="https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/screenshot_error.jpg" width="256" alt="Скриншот окна программы с ошибкой">
 
 Чтобы приложение работало, вам необходимо предоставить ему некоторые разрешения, такие как доступ к хранилищу (SD-карте), а также местоположение. Программа никуда не передает эти данные - вы можете в этом убедиться. *Если вам нужно убрать данные местоположения из лога, вы можете это сделать на этапе дальнейшей обработки лога (программой-парсером).*
 
-Если некоторые разрешения не предоставлены, вы увидите всплывающее сообщение, как на одном из скриншотов. В появившемся сообщении будут перечислены все разрешения, необходимые для выполнения операции, а именно:
+Если некоторые разрешения не предоставлены, вы увидите всплывающее сообщение, как на скриншоте выше. В появившемся сообщении будут перечислены все разрешения, необходимые для работы программы, а именно:
 
-1. android.permission.READ_EXTERNAL_STORAGE
-2. android.permission.WRITE_EXTERNAL_STORAGE
-3. android.permission.ACCESS_COARSE_LOCATION
-4. android.permission.ACCESS_FINE_LOCATION
-5. android.permission.ACCESS_BACKGROUND_LOCATION
+1. READ_EXTERNAL_STORAGE
+2. WRITE_EXTERNAL_STORAGE
+3. ACCESS_COARSE_LOCATION
+4. ACCESS_FINE_LOCATION
+5. ACCESS_BACKGROUND_LOCATION
 
 Если вы видите сообщение 1 или 2, вам необходимо предоставить программе доступ к хранилищу. Если вы видите сообщения 3 или 4, вам необходимо предоставить программе доступ к местоположению. Если вы видите сообщение 5, вам необходимо дать программе разрешение на доступ к местоположению в фоновом режиме.
 

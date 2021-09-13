@@ -244,7 +244,7 @@ namespace Simple_Wi_Fi_Logger {
                 string res = "Permissions denied:";
                 for (int i = 0; i < permissions.Length; ++i) {
                     if (grantResults[i] == Permission.Denied)
-                        res += "\n>" + permissions[i];
+                        res += "\n> " + permissions[i].Substring(permissions[i].LastIndexOf('.') + 1);
                 }
                 res += "\nYou must grant listed permissions to start work!\nVisit the developer's page for help.";
 
