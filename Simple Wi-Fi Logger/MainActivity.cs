@@ -18,6 +18,19 @@ namespace Simple_Wi_Fi_Logger {
     public static class GlobalScope {
         public static bool service_enabled = false;
         public static Intent service_logging;
+        public static int sleep_delay = 0;
+
+        public static MainActivity current_activity = null;
+        public static ulong current_index_;
+        public static ulong current_index { 
+            get { return current_index_; } 
+            set {
+                current_index_ = value;  
+                if (current_activity != null) {
+                    current_activity.OnCurrentIndexUpdate();
+                }
+            } 
+        }
     }
 
 
@@ -27,9 +40,10 @@ namespace Simple_Wi_Fi_Logger {
         EditText textbox_delay;
         Button log_button;
         CheckBox enable_separators, enable_rtt;
+        TextView current_index;
         
         LocalBroadcastManager localBroadcastManager;
-        int sleep_delay = 0;
+        
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -57,6 +71,8 @@ namespace Simple_Wi_Fi_Logger {
 
             enable_rtt = (CheckBox)FindViewById(Resource.Id.checkBox2);
 
+            current_index = (TextView)FindViewById(Resource.Id.textView7);
+
             TextView delepopers_link = (TextView)FindViewById(Resource.Id.textView2);
             delepopers_link.Click += Developers_link_Click;
             delepopers_link.SetHorizontallyScrolling(true);
@@ -74,13 +90,22 @@ namespace Simple_Wi_Fi_Logger {
             CheckAppPermissions();
 
             if (GlobalScope.service_enabled == true) {
-                textbox_delay.Text = sleep_delay.ToString();
+                textbox_delay.Text = GlobalScope.sleep_delay.ToString();
                 log_button.Text = GetText(Resource.String.main_button_stop);
+
+                current_index.Text = GlobalScope.current_index.ToString();
             }
+            GlobalScope.current_activity = this;
+        }
+
+        protected override void OnDestroy() {
+            GlobalScope.current_activity = null;
+            base.OnDestroy();
         }
 
         private void CheckAppPermissions() {
             if ((int)Build.VERSION.SdkInt < 23) {
+                perms_ok = true;
                 return;
             } else {
                 var permissions = new List<string>();
@@ -111,30 +136,39 @@ namespace Simple_Wi_Fi_Logger {
                 if (Build.VERSION.SdkInt >= BuildVersionCodes.P && PackageManager.CheckPermission(Android.Manifest.Permission.ForegroundService, PackageName) != Permission.Granted)
                     permissions.Add(Android.Manifest.Permission.ForegroundService);
 
-                if (permissions.Count == 0) 
+                if (permissions.Count == 0) {
+                    log_button.Text = GetText(Resource.String.main_button_start);
+                    perms_ok = true;
                     return;
+                }
 
                 RequestPermissions(permissions.ToArray(), 1);
             }
         }
 
+        bool perms_ok = false;
         private void Log_button_Click(object sender, EventArgs e) {
-            if (GlobalScope.service_enabled) {
-                GlobalScope.service_enabled = false;
-                log_button.Text = GetText(Resource.String.main_button_start);
+            if (perms_ok) {
+                if (GlobalScope.service_enabled) {
+                    GlobalScope.service_enabled = false;
+                    log_button.Text = GetText(Resource.String.main_button_start);
 
-                StopService(GlobalScope.service_logging);
-                GlobalScope.service_logging = null;
+                    StopService(GlobalScope.service_logging);
+                    GlobalScope.service_logging = null;
+                    current_index.Text = "-";
+                } else {
+                    GlobalScope.service_enabled = true;
+                    log_button.Text = GetText(Resource.String.main_button_stop);
+
+                    GlobalScope.service_logging = new Intent(this, typeof(LoggingService));
+                    GlobalScope.service_logging.SetAction("SERVICE_AMDMTS_ANY");
+                    GlobalScope.service_logging.PutExtra("NEW_SLEEP_DELAY", GlobalScope.sleep_delay * 1000);
+                    GlobalScope.service_logging.PutExtra("ENABLE_SEPARATORS", enable_separators.Checked);
+                    GlobalScope.service_logging.PutExtra("ENABLE_RTT", enable_rtt.Checked);
+                    StartForegroundService(GlobalScope.service_logging);
+                }
             } else {
-                GlobalScope.service_enabled = true;
-                log_button.Text = GetText(Resource.String.main_button_stop);
-
-                GlobalScope.service_logging = new Intent(this, typeof(LoggingService));
-                GlobalScope.service_logging.SetAction("SERVICE_AMDMTS_ANY");
-                GlobalScope.service_logging.PutExtra("NEW_SLEEP_DELAY", sleep_delay * 1000);
-                GlobalScope.service_logging.PutExtra("ENABLE_SEPARATORS", enable_separators.Checked);
-                GlobalScope.service_logging.PutExtra("ENABLE_RTT", enable_rtt.Checked);
-                StartForegroundService(GlobalScope.service_logging);
+                CheckAppPermissions();
             }
         }
 
@@ -173,11 +207,17 @@ namespace Simple_Wi_Fi_Logger {
         }
 
         private void Split_button_Click(object sender, EventArgs e) {
-            Intent intent = new Intent("SERVICE_AMDMTS_ANY");
-            intent.PutExtra("LOGFILE_SPLIT", true);
-            localBroadcastManager.SendBroadcast(intent);
+            if (GlobalScope.service_enabled) {
+                Intent intent = new Intent("SERVICE_AMDMTS_ANY");
+                intent.PutExtra("LOGFILE_SPLIT", true);
+                localBroadcastManager.SendBroadcast(intent);
 
-            Toast.MakeText(Application.Context, "Log split command received", ToastLength.Short).Show();
+                Toast.MakeText(Application.Context, "Log split command received", ToastLength.Short).Show();
+            }
+        }
+
+        public void OnCurrentIndexUpdate() {
+            current_index.Text = GlobalScope.current_index.ToString();
         }
 
         private void Reset_button_Click(object sender, EventArgs e) {
@@ -186,10 +226,10 @@ namespace Simple_Wi_Fi_Logger {
 
         private void Textbox_delay_TextChanged(object sender, Android.Text.TextChangedEventArgs e) {
             if (ushort.TryParse(textbox_delay.Text, out ushort temp)) {
-                sleep_delay = temp;
+                GlobalScope.sleep_delay = temp;
 
                 Intent intent = new Intent("SERVICE_AMDMTS_ANY");
-                intent.PutExtra("NEW_SLEEP_DELAY", sleep_delay * 1000);
+                intent.PutExtra("NEW_SLEEP_DELAY", GlobalScope.sleep_delay * 1000);
                 localBroadcastManager.SendBroadcast(intent);
             }
         }
@@ -204,11 +244,19 @@ namespace Simple_Wi_Fi_Logger {
                 string res = "Permissions denied:";
                 for (int i = 0; i < permissions.Length; ++i) {
                     if (grantResults[i] == Permission.Denied)
-                        res += "\n" + permissions[i];
+                        res += "\n>" + permissions[i];
                 }
+                res += "\nYou must grant listed permissions to start work!\nVisit the developer's page for help.";
+
+                log_button.Text = GetText(Resource.String.main_button_params);
+
                 Toast.MakeText(Application.Context, res, ToastLength.Long).Show();
-                new Timer((object none) => { System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow(); }, null, 3000, Timeout.Infinite);
+                //new Timer((object none) => { System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow(); }, null, 3000, Timeout.Infinite);
+            } else {
+                log_button.Text = GetText(Resource.String.main_button_start);
+                perms_ok = true;
             }
+                
         }
 
 

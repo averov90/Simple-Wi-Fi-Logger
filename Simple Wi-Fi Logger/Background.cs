@@ -89,6 +89,8 @@ namespace Simple_Wi_Fi_Logger {
                     Directory.CreateDirectory(storage_path);
                 }
                 logfile = new LogFile(storage_path, this);
+
+                GlobalScope.current_index = logfile.CurrentIndex;
             }
 
             {
@@ -186,8 +188,8 @@ namespace Simple_Wi_Fi_Logger {
                     split_file = false;
                     logfile.NewFile();
 
-
                     activity_context.Post(() => {
+                        GlobalScope.current_index = logfile.CurrentIndex;
                         Toast.MakeText(Application.Context, "Log splitted", ToastLength.Short).Show();
                     });
                 }
@@ -240,6 +242,8 @@ namespace Simple_Wi_Fi_Logger {
                      "Network speed (m/s); Network speed accuracy (m/s)");
                 file.Flush();
             }
+
+            public ulong CurrentIndex { get { return counter; } }
 
             public void NewFile() {
                 file.Close();

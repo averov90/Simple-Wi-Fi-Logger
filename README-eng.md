@@ -16,11 +16,14 @@ The only task of this program is to save a list of visible networks at a specifi
 * the log contains not only the necessary data (BSSID, Level, Frequrency), but also separate fields for the location determined by GPS satellites and network coordinates (this makes sense, since different sources may have different readings and errors depending on the conditions of use : outdoors or in a building, for example)
 * there are no region-dependent parameters (for example, the channel, instead of which the frequency is logged, from which, if necessary, you can get the channel)
 * it is possible to make the log more "human readable" by enabling the separators between scans (`Insert separators between scans`)
+* displaying the index of the current log file (which is being written to) in the interface will make it much more convenient to track the moment when you need to split the log file (for example, if you planned in advance which segment of the path should correspond to which index)
 * [for novice developers]: not an overloaded example of using many Android APIs (for example, `LocalBroadcastManager`, which was used just for the example, which is mostly incorrect and it is better to use bind to service, for which there are more examples)
 
 Program interface:
 
 <img src="https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/screenshot.jpg" width="384" alt="Screenshot of the program window">
+&nbsp;
+<img src="https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/screenshot.png" width="768" alt="Screenshot of the program window">
 
 ### Full list of log fields
 Access point information:
@@ -56,6 +59,10 @@ Information about the device from which the scan is performed:
 It is important to understand that scanning for available networks does not occur instantly, but within a few seconds. During scanning, the smartphone picks up beacon packets from access points, however, access points decide when to send a new packet to them, so the network can disappear from the list and reappear. Beacon packets are not sent simultaneously from all access points, so during the scan you can manage to cover some distance, which is why, for example, distances to different access points in the same list can be measured from actually different positions. Ideally, you need to stand still when measuring, however, this is not always convenient. Velocity data can help you improve the quality of your data sampling in your analysis by adding more bias to data with faster travel speeds.
 
 ### Troubleshooting
+If you encounter an error message similar to the one shown in the screenshot below, this section provides a solution to the problem.
+
+<img src="https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/screenshot_error.jpg" width="192" alt = "Screenshot of the program window with a error">
+
 For the application to work, you need to give it some permissions, such as access to storage (SD card) as well as location. The program does not transfer this data anywhere - you can be sure of this since its source code is open. *If you need to remove location data from the log, you can do this at the stage of further processing the log (with a parser program).*
 
 If some of the permissions are not granted, you will see a pop-up message like in one of the screenshots. The message that appears will list all the permissions necessary for the operation, namely:

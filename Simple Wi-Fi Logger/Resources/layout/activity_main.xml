@@ -64,11 +64,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/checkBox1" />
-        <Button
-            android:text="Split log"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button3" />
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout4">
+            <Button
+                android:text="Split log"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:id="@+id/button3" />
+            <LinearLayout
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0"
+                android:id="@+id/linearLayout5">
+                <TextView
+                    android:text="Index"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:id="@+id/textView6" />
+                <TextView
+                    android:text="-"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:id="@+id/textView7" />
+            </LinearLayout>
+            <Space
+                android:layout_width="1pt"
+                android:layout_height="match_parent"
+                android:id="@+id/space4" />
+        </LinearLayout>
         <Space
             android:layout_width="match_parent"
             android:layout_height="8pt"
