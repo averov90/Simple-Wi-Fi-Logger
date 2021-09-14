@@ -73,8 +73,9 @@
             android:id="@+id/linearLayout4">
             <Button
                 android:text="Split log"
+                android:minWidth="16pt" 
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:id="@+id/button3" />
             <LinearLayout

@@ -3,7 +3,9 @@
 ### :small_orange_diamond: [Русская версия](/README.md)
 
 This program is a tool for capturing and saving a list of Wi-Fi access points visible by a device running Android 5.0 - 11.0+.
-The only task of this program is to save a list of visible networks at a specified time interval (or with the minimum possible interval). In addition, the implementation of this program is simple enough to use as a training example.
+The only task of this program is to save a list of visible networks at a specified time interval (or with the minimum possible interval). In addition, the implementation of this program is simple enough to use as an example of some Android APIs.
+
+![App banner](https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/logo.png)
 
 ### Features
 * minimalistic interface contains only the most basic settings
@@ -63,9 +65,9 @@ If you encounter an error message similar to the one shown in the screenshot bel
 
 <img src="https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/screenshot_error.jpg" width="256" alt = "Screenshot of the program window with a error">
 
-For the application to work, you need to give it some permissions, such as access to storage (SD card) as well as location. The program does not transfer this data anywhere - you can be sure of this since its source code is open. *If you need to remove location data from the log, you can do this at the stage of further processing the log (with a parser program).*
+For the application to work, you need to give it some permissions, such as access to storage (SD card) as well as location. This can be done in the settings of your smartphone in the application details section. The program does not transfer this data anywhere - you can be sure of this since its source code is open. *If you need to remove location data from the log, you can do this at the stage of further processing the log (with a parser program).*
 
-If some of the permissions are not granted, you will see a pop-up message like in the screenshot above. The message that appears will list all the permissions necessary for the operation, namely:
+If some of the permissions are not granted, you will see a pop-up message like in the screenshot above. The message that appears will list all the permissions necessary for the operation (but missing), namely:
 
 1. READ_EXTERNAL_STORAGE
 2. WRITE_EXTERNAL_STORAGE

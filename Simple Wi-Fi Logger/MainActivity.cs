@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.IO;
 
 using Android.App;
@@ -73,10 +72,10 @@ namespace Simple_Wi_Fi_Logger {
 
             current_index = (TextView)FindViewById(Resource.Id.textView7);
 
-            TextView delepopers_link = (TextView)FindViewById(Resource.Id.textView2);
-            delepopers_link.Click += Developers_link_Click;
-            delepopers_link.SetHorizontallyScrolling(true);
-            delepopers_link.MovementMethod = new ScrollingMovementMethod();
+            TextView developer_link = (TextView)FindViewById(Resource.Id.textView2);
+            developer_link.Click += Developers_link_Click;
+            developer_link.SetHorizontallyScrolling(true);
+            developer_link.MovementMethod = new ScrollingMovementMethod();
 
             TextView copy_folder = (TextView)FindViewById(Resource.Id.textView5);
             copy_folder.Text = GetLogFolder();
@@ -180,9 +179,12 @@ namespace Simple_Wi_Fi_Logger {
                 storage_path = storage_path.Split("/Android")[0];
             }
             storage_path += "/Simple Wi-Fi Logger";
-            if (!Directory.Exists(storage_path)) {
-                Directory.CreateDirectory(storage_path);
-            }
+            try {
+                if (!Directory.Exists(storage_path)) {
+                    Directory.CreateDirectory(storage_path);
+                }
+            } catch (Exception) { }
+           
             return storage_path;
         }
 
