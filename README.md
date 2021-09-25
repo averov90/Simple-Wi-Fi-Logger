@@ -1,5 +1,5 @@
 # Simple Wi-Fi Logger
-[![License](https://img.shields.io/badge/LICENSE-GPL%20v3.0-green?style=flat-square)](/LICENSE)  [![Version](https://img.shields.io/badge/VERSION-RELEASE%20--%201.1-green?style=flat-square)](https://github.com/averov90/Simple-Wi-Fi-Logger/releases)
+[![License](https://img.shields.io/badge/LICENSE-GPL%20v3.0-green?style=flat-square)](/LICENSE)  [![Version](https://img.shields.io/badge/VERSION-RELEASE%20--%201.2-green?style=flat-square)](https://github.com/averov90/Simple-Wi-Fi-Logger/releases)
 ### :small_orange_diamond: [English version](/README-eng.md)
 
 Данная программа представляет из себя инструмент захвата и сохранения списка точек доступа Wi-Fi, видимых устройством с операционной системой Android 5.0 - 11.0+.

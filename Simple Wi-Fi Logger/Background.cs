@@ -56,7 +56,6 @@ namespace Simple_Wi_Fi_Logger {
         string unavailible_rtt_error_message = "null";
 
         public override StartCommandResult OnStartCommand(Intent intent, StartCommandFlags flags, int startId) {
-            RegisterService();
             activity_context = new Handler(Looper.MainLooper);
 
             localBroadcastManager = LocalBroadcastManager.GetInstance(this);
@@ -69,18 +68,35 @@ namespace Simple_Wi_Fi_Logger {
 
             {
                 wifiManager = (WifiManager)Application.Context.GetSystemService(WifiService);
-                if (wifiManager.IsWifiEnabled) {
-                    wifiManager.SetWifiEnabled(true);
+                if (!wifiManager.IsWifiEnabled) {
+                    try {
+#pragma warning disable CS0618 // Type or member is obsolete
+                        wifiManager.SetWifiEnabled(true);
+#pragma warning restore CS0618 // Type or member is obsolete
+                    } catch (Exception) { }
+                    if (!wifiManager.IsWifiEnabled) {
+                        Toast.MakeText(Application.Context, "ERROR: Wi-Fi in not enabled! Please, enable Wi-Fi and start application again.", ToastLength.Long).Show();
+                        return StartCommandResult.NotSticky;
+                    }
                 }
 
                 var wifiReceiver = new WifiReceiver(this, wifiManager);
                 Application.Context.RegisterReceiver(wifiReceiver, new IntentFilter(WifiManager.ScanResultsAvailableAction));
             }
 
+            RegisterService();
+
             {
+                string storage_path = null;
+                try {
 #pragma warning disable CS0618 // Type or member is obsolete
-                string storage_path = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDocuments).AbsolutePath;
+                    storage_path = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDocuments).AbsolutePath;
 #pragma warning restore CS0618 // Type or member is obsolete
+                } catch (Exception ex) {
+                    Toast.MakeText(Application.Context, "ERROR: " + ex.Message + " | " + ex.StackTrace, ToastLength.Long).Show();
+                    return StartCommandResult.NotSticky;
+                }
+
                 if (storage_path.Contains("/Android")) {
                     storage_path = storage_path.Split("/Android")[0];
                 }
@@ -120,6 +136,7 @@ namespace Simple_Wi_Fi_Logger {
             thread_working_sleeper_mloop = new AutoResetEvent(false);
             thread_working_sleeper_tiny = new ManualResetEvent(false);
             thread_working = true;
+
             service_thread = new Thread(thread_proc);
             service_thread.Start();
 
@@ -162,26 +179,37 @@ namespace Simple_Wi_Fi_Logger {
         }
 
         public override void OnDestroy() {
-            thread_working = false;
-            thread_working_sleeper_tiny.Set();
-            thread_working_sleeper_mloop.Set();
+            try {
+                thread_working = false;
+                thread_working_sleeper_tiny.Set();
+                thread_working_sleeper_mloop.Set();
 
-            locationManager.RemoveUpdates(locationListener);
-            localBroadcastManager.UnregisterReceiver(receiver);
+                locationManager.RemoveUpdates(locationListener);
+                localBroadcastManager.UnregisterReceiver(receiver);
 
-            if (notificationManager != null) notificationManager.DeleteNotificationChannel(FORSERVICE_CHANNEL_ID);
+                if (notificationManager != null) notificationManager.DeleteNotificationChannel(FORSERVICE_CHANNEL_ID);
+            } catch (Exception) { }
+            
             base.OnDestroy();
         }
 
         void thread_proc() {
+            bool scanStarted;
             while (thread_working) {
+
+                try {
 #pragma warning disable CS0618 // Type or member is obsolete
-                while (!wifiManager.StartScan() && thread_working) {
+                    scanStarted = wifiManager.StartScan();
+#pragma warning restore CS0618
+                } catch (Exception ex) {
+                    Toast.MakeText(Application.Context, "ERROR: " + ex.Message + " | " + ex.StackTrace, ToastLength.Long).Show();
+                    return;
+                }
+                while (!scanStarted && thread_working) {
                     Thread.Sleep(TimeSpan.Zero);
                     thread_working_sleeper_tiny.WaitOne(20);
                 }
 
-#pragma warning restore CS0618
                 write_event.WaitOne();
 
                 if (split_file) {
