@@ -1218,7 +1218,7 @@ For the convenience of accessing the required log field, I use a numbered list o
 24. Network speed accuracy (m/s)
 
 <details>
-   <summary> Sample parser-parser code </summary>
+   <summary> Sample parser-analyzer code </summary>
    
    ```python
 from datetime import datetime
