@@ -1,76 +1,76 @@
 # Simple Wi-Fi Logger
 [![License](https://img.shields.io/badge/LICENSE-GPL%20v3.0-green?style=flat-square)](/LICENSE)  [![Version](https://img.shields.io/badge/VERSION-RELEASE%20--%201.2-green?style=flat-square)](https://github.com/averov90/Simple-Wi-Fi-Logger/releases)
-### :small_orange_diamond: [Русская версия](/README.md)
+### :small_orange_diamond: [Go to English version](/README.md)
 
 
-[<img src="https://seller.samsungapps.com/images/badges/galaxyStore/png_big/GalaxyStore_EnglishEU.png" alt="Get it on Galaxy Store" height="80">](https://galaxy.store/awifilogg)
+[<img src="https://seller.samsungapps.com/images/badges/galaxyStore/png_big/GalaxyStore_Russian.png" alt="Скачайте в Galaxy Store" height="80">](https://galaxy.store/awifilogg)
 
-This program is a tool for capturing and saving a list of Wi-Fi access points visible by a device running Android 5.0 - 11.0+.
-The only task of this program is to save a list of visible networks at a specified time interval (or with the minimum possible interval). In addition, the implementation of this program is simple enough to use as an example of some Android APIs.
+Данная программа представляет из себя инструмент захвата и сохранения списка точек доступа Wi-Fi, видимых устройством с операционной системой Android 5.0 - 11.0+.
+Единственная задача данной программы - сохранение списка видимых сетей через заданный интервал времени (или с минимально возможным интервалом). Помимо этого, реализация этой программы достаточно проста, чтобы использовать её в качестве примера работы с некоторыми API Android.
 
-![App banner](https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/logo.png)
+![Баннер программы](https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/logo.png)
 
-### Features
-* minimalistic interface contains only the most basic settings
-* the program can run in the background any amount of time
-* it is possible to set the logging interval from the minimum (0 seconds of overhead delay) to several hours (65535 seconds &asymp; 18 hours)
-* it is possible to set a new delay and delimiter insertion mode right during logging
-* it is possible to split the log by pressing a button (the program starts a new file, no longer writes to the old one)
-* the format of the log is the same from session to session: .csv file, contains the same number of fields, regardless of the settings (for the convenience of parsing by separator)
-* ability to disable RTT (IEEE 802.11mc) ranging to reduce latency overhead
-* the log contains not only the necessary data (BSSID, Level, Frequrency), but also separate fields for the location determined by GPS satellites and network coordinates (this makes sense, since different sources may have different readings and errors depending on the conditions of use : outdoors or in a building, for example)
-* there are no region-dependent parameters (for example, the channel, instead of which the frequency is logged, from which, if necessary, you can get the channel)
-* it is possible to make the log more "human readable" by enabling the separators between scans (`Insert separators between scans`)
-* displaying the index of the current log file (which is being written to) in the interface will make it much more convenient to track the moment when you need to split the log file (for example, if you planned in advance which segment of the path should correspond to which index)
-* [for novice developers]: not an overloaded example of using many Android APIs (for example, `LocalBroadcastManager`, which was used just for the example, which is mostly incorrect and it is better to use bind to service, for which there are more examples)
+### Особенности
+* минималистичный интерфейс содержит только самые основные настройки
+* программа может работать в фоне любое количество времени
+* есть возможность задать интервал логгирования от минимального (0 секунд накладной задержки) до нескольких часов (65535 секунд &asymp; 18 часов)
+* есть возможность прямо во время логгирования задать новую задержку и режим вставки разделителей
+* есть возможность разделить лог по нажатию кнопки (программа начинает новый файл, в старый больше не пишет)
+* формат лога одинаков от сессии к сессии: .csv файл, содержит одинаковое количество полей вне зависимости от настроек (для удобства парсинга по разделителю)
+* возможность отключить ранжирование RTT (IEEE 802.11mc) для уменьшения накладной задержки
+* лог содержит не только необходимые данные (BSSID, Level, Frequrency), но и раздельные поля для местоположения, определённого по спутникам GPS и координатам сети (это имеет смысл, так как у разных источников могут быть разные показания и погрешности в зависимости от условий использования: на улице или в здании, например)
+* отсутствуют регионально-зависимые параметры (например, канал, вместо которого логгируется частота, из которой при необходимости можно получить канал)
+* есть возможность сделать лог более "читабельным" для человека, включив разделители подходов сканирования (`Insert separators between scans`)
+* отображение индекса текущего лог-файла (в который идёт запись) в интерфейсе позволит гораздо удобнее отслеживать молмент когда нужно разделить файл лога (например, если вы заранее спланировали какой отрезок пути какому индексу должен соответствовать)
+* [для начинающих разработчиков]: не перегруженный пример использования множества API Android (например, `LocalBroadcastManager`, который был использован как раз для примера, что, в основном некорректно и лучше использовать bind to service, примеров для которого больше)
 
-Program interface:
+Интерфейс программы:
 
-<img src="https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/screenshot.jpg" width="384" alt="Screenshot of the program window">
+<img src="https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/screenshot.jpg" width="384" alt="Скриншот окна программы">
 &nbsp;
-<img src="https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/screenshot.png" width="768" alt="Screenshot of the program window">
+<img src="https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/screenshot.png" width="768" alt="Скриншот окна программы">
 
-### Full list of log fields
-Access point information:
-* **BSSID** - MAC address of the access point
-* **Level (dbm)** - power in decibels per milliwatt (usually the signal strength is shown in decibels or in percent)
-* **Level-based distance (m)** - the distance to the access point in meters, calculated based on the signal strength (rather inaccurate, since the signal strength drops not only due to distance, nor due to concrete walls, for example )
-* **RTT distance (mm)** - much more accurate distance to the access point in millimeters, however, IEEE 802.11mc (RTT) support is needed both on the smartphone and on the access point (you do not need to connect to the access point)
-* **Standart** - Wi-Fi standard (its definition is not supported by all devices): Legacy (802.11b or 802.11g) 802.11n or 802.11ac, or 802.11ax
-* **Frequrency (MHz)** - the main frequency of the access point in megahertz (the simplest thing you can do with it is to distinguish 2.4 GHz Wi-Fi from 5 GHz)
-* **SSID** - access point name
-* **Security** - information about the security of the access point
-* **Passpoint venue name** - the global name of the association of access points (for example, Tomsk_Airport)
-* **Passpoint operators name** - internal name of the access point in the union (for example, for the system administrator)
+### Полный список полей лога
+Информация о точке доступа:
+* **BSSID** - MAC-адрес точки доступа
+* **Level (dbm)** - мощность в децибеллах на один милливатт (обычно силу сигнала показывают в децибеллах или в процентах)
+* **Level-based distance (m)** - расстояние до точки доступа в метрах, рассчитанное на основе силы сигнала (довольно неточное, так как сила сигнала падает не только из-за расстояния, ни и из-за бетонных стен, например)
+* **RTT distance (mm)** - гораздо более точное расстояние до точки доступа в миллиметрах, однако, нужна поддержка (RTT) IEEE 802.11mc как на смартфоне, так и на точке доступа (подключаться к точке доступа не нужно)
+* **Standart** - стандарт Wi-Fi (его определение поддерживается не всеми устройствами): Legacy (802.11b или 802.11g) 802.11n или 802.11ac, или 802.11ax
+* **Frequrency (MHz)** - основная частота точки доступа в мегагерцах (самое простое что можно по ней сделать - отличить Wi-Fi 2.4 ГГц от 5 ГГц)
+* **SSID** - имя точки доступа
+* **Security** - информация о защите точки доступа
+* **Passpoint venue name** - глобальное имя объединения точек доступа (например, Tomsk_Airport)
+* **Passpoint operators name** - внутреннее имя точки доступа в объединении (например, для администратора системы)
 
-Information about the device from which the scan is performed:
-* **Date** - the current date on the device in the format YYYY.MM.DD hh:mm:ss.s ("s" after ss shows 1/10 of a second)
-* **GPS latitude (deg)** - latitude by GPS coordinates in degrees
-* **GPS longtitude (deg)** - longitude by GPS coordinates in degrees
-* **GPS altitude (m, WGS84)** - altitude according to GPS coordinates in meters according to the WGS84 standard (-1 if there is no data)
-* **GPS speed (m/s)** - secant speed in meters per second according to GPS (-1 if there is no data)
-* **GPS radial accuracy (m)** - horizontal error in meters according to GPS (-1 if there is no data)
-* **GPS vertical accuracy (m)** - GPS vertical error in meters (-1 if no data is available)
-* **GPS speed accuracy (m/s)** - GPS speed accuracy in meters per second (-1 if there is no data)
-* **Network latitude (deg)** - latitude by network coordinates in degrees
-* **Network longtitude (deg)** - longitude by network coordinates in degrees
-* **Network altitude (m, WGS84)** - altitude by network coordinates in meters according to the WGS84 standard (-1 if there is no data on)
-* **Network speed (m/s)** - secant speed in meters per second over the network (-1 if there is no data)
-* **Network radial accuracy (m)** - horizontal error in meters over the network (-1 if there is no data)
-* **Network vertical accuracy (m)** - vertical error in meters over the network (-1 if there is no data)
-* **Network speed accuracy (m/s)** - error in determining the speed over the network in meters per second (-1 if there is no data)
+Информация об устройстве, с которого производится сканирование:
+* **Date** - текущая дата на устройстве в формате ГГГГ.ММ.ДД ЧЧ:ММ:СС.с ("с" после СС показывает 1/10 секунды)
+* **GPS latitude (deg)** - широта по координатам GPS в градусах
+* **GPS longtitude (deg)** - долгота по координатам GPS в градусах
+* **GPS altitude (m, WGS84)** - высота по координатам GPS в метрах по стандарту WGS84 (-1 если данных о нет)
+* **GPS speed (m/s)** - секущая скорость в метрах в секунду по GPS (-1 если данных нет)
+* **GPS radial accuracy (m)** - горизонтальная погрешность в метрах по GPS (-1 если данных нет)
+* **GPS vertical accuracy (m)** - вертикальная погрешность в метрах по GPS (-1 если данных нет)
+* **GPS speed accuracy (m/s)** - погрешность определения скорости по GPS в метрах в секунду (-1 если данных нет)
+* **Network latitude (deg)** - широта по координатам сети в градусах
+* **Network longtitude (deg)** - долгота по координатам сети в градусах
+* **Network altitude (m, WGS84)** - высота по координатам сети в метрах по стандарту WGS84 (-1 если данных о нет)
+* **Network speed (m/s)** - секущая скорость в метрах в секунду по сети (-1 если данных нет)
+* **Network radial accuracy (m)** - горизонтальная погрешность в метрах по сети (-1 если данных нет)
+* **Network vertical accuracy (m)** - вертикальная погрешность в метрах по сети (-1 если данных нет)
+* **Network speed accuracy (m/s)** - погрешность определения скорости по сети в метрах в секунду (-1 если данных нет)
 
-#### Why is speed needed?
-It is important to understand that scanning for available networks does not occur instantly, but within a few seconds. During scanning, the smartphone picks up beacon packets from access points, however, access points decide when to send a new packet to them, so the network can disappear from the list and reappear. Beacon packets are not sent simultaneously from all access points, so during the scan you can manage to cover some distance, which is why, for example, distances to different access points in the same list can be measured from actually different positions. Ideally, you need to stand still when measuring, however, this is not always convenient. Velocity data can help you improve the quality of your data sampling in your analysis by adding more bias to data with faster travel speeds.
+#### Зачем нужна скорость?
+Важно понимать, что сканирование доступных сетей происходит не моментально, а в течение нескольких секунд. За время сканирования смартфон улавливает beacon-пакеты от точек доступа, однако, точки доступа сами решают когда им послать новый пакет, поэтому сеть может исчезать из списка и появляться снова. Beacon-пакеты отправляются не одновременно со всех точек доступа, поэтому за время сканирования вы можете успеть пройти некоторое расстояние, из-за чего, например, расстояния до разных точек доступа в одном списке могут быть измерены из фактически разных позиций. В идеале, при измерении вам нужно стоять на месте, однако, это не всегда удобно. Данные о скорости помогут вам улучшить качество выборки данных при анализе добавлением большей погрешности к данным с большей скоростью перемещения.
 
-### Troubleshooting
-If you encounter an error message similar to the one shown in the screenshot below, this section provides a solution to the problem.
+### Решение проблем
+Если вы столкнулись с сообщением об ошибке, похожим на то, что изображено на скриншоте ниже, в этом разделе находится решение проблемы.
 
-<img src="https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/screenshot_error.jpg" width="256" alt = "Screenshot of the program window with a error">
+<img src="https://github.com/averov90/Simple-Wi-Fi-Logger/raw/master/screenshot_error.jpg" width="256" alt="Скриншот окна программы с ошибкой">
 
-For the application to work, you need to give it some permissions, such as access to storage (SD card) as well as location. This can be done in the settings of your smartphone in the application details section. The program does not transfer this data anywhere - you can be sure of this since its source code is open. *If you need to remove location data from the log, you can do this at the stage of further processing the log (with a parser program).*
+Чтобы приложение работало, вам необходимо предоставить ему некоторые разрешения, такие как доступ к хранилищу (SD-карте), а также к местоположению. Это можно сделать в настройках вашего смартфона в разделе сведений о приложении. Программа никуда не передает эти данные - вы можете в этом убедиться. *Если вам нужно убрать данные местоположения из лога, вы можете это сделать на этапе дальнейшей обработки лога (программой-парсером).*
 
-If some of the permissions are not granted, you will see a pop-up message like in the screenshot above. The message that appears will list all the permissions necessary for the operation (but missing), namely:
+Если некоторые разрешения не предоставлены, вы увидите всплывающее сообщение, как на скриншоте выше. В появившемся сообщении будут перечислены все разрешения, необходимые для работы программы, но отсутствующие, а именно:
 
 1. READ_EXTERNAL_STORAGE
 2. WRITE_EXTERNAL_STORAGE
@@ -78,19 +78,19 @@ If some of the permissions are not granted, you will see a pop-up message like i
 4. ACCESS_FINE_LOCATION
 5. ACCESS_BACKGROUND_LOCATION
 
-If you see message 1 or 2, you need to grant the program access to the storage (SD card). If you see messages 3 or 4, you need to give the program access to the location. If you see message 5, you need to give the program permission to locate the device in background.
+Если вы видите сообщение 1 или 2, вам необходимо предоставить программе доступ к хранилищу. Если вы видите сообщения 3 или 4, вам необходимо предоставить программе доступ к местоположению. Если вы видите сообщение 5, вам необходимо дать программе разрешение на доступ к местоположению в фоновом режиме.
 
-### Suggested Use Cases
-Someone may decide that these kinds of programs are needed to help choose the right channel for their network. I must say right away: this program is not intended for this.
+### Предполагаемые сценарии использования
+Кто-то может решить, что подобного рода программы нужны чтобы помочь выбрать правильный канал для своей сети. Сразу скажу: данная программа предназначена не для этого.
 
-The main purpose of this program is to compile lists of surrounding access points. This can be useful if you need, for example, to determine what access points are in the area of ​​interest, what is the schedule of their work (if you monitor long enough) (for example, this is a personal point of some employee), the approximate location of a certain access point ( or the position of the points relative to each other).
+Основное предназначение данной программы заключается в составлении списков окружающих точек доступа. Это может быть полезно, если вам нужно, например, определить какие точки доступа есть в интересующей области, с чем связан график их работы (если мониторить достаточно долго) (например, это личная точка какого-то сотрудника), примерное расположение некой точки доступа (или положение точек друг относительно друга).
 
-This program does not process the collected data in any way, so it will be completely useless for most ordinary users. It is assumed that the main audience of this program will be system administrators, anykeys and other personnel serving the network.
+Данная программа никак не обрабатывает собранные данные, поэтому для большинства обычных пользователей будет совершенно бесполезна. Предполагается, что основной аудиторией данной программы будут сисадмины, эникеи и другой персонал, обслуживающий сети.
 
 <details>
-   <summary> Sample log generated by Simple Wi-Fi Logger </summary>
-   
-   ```
+  <summary>Пример лога, сгенерированного Simple Wi-Fi Logger</summary>
+
+  ```
 Date; BSSID; Level (dbm); Level-based distance (m); RTT distance (mm); Standart; Frequrency (MHz); SSID; Security; Passpoint venue name; Passpoint operators name; GPS latitude (deg); GPS longtitude (deg); GPS radial accuracy (m); GPS altitude (m, WGS84); GPS vertical accuracy (m); GPS speed (m/s); GPS speed accuracy (m/s); Network latitude (deg); Network longtitude (deg); Network radial accuracy (m); Network altitude (m, WGS84); Network vertical accuracy (m); Network speed (m/s); Network speed accuracy (m/s)
 2021.09.03 13:45:03.7; 74:DA:88:05:F0:EA; -73; 43,2725; unsupported; Unknown; 2462; Hoom; [WPA2-PSK-CCMP][ESS][WPS]; ; ; 56,4856577100521; 84,9820611074678; 6; 143,800007911746; -1; 7,969193; -1; null; null; null; null; null; null; null
 2021.09.03 13:45:03.7; 30:5A:3A:B6:C3:99; -76; 62,26204; unsupported; Unknown; 2417; pizza_puzzle; [WPA2-PSK-CCMP][ESS]; ; ; 56,4856577100521; 84,9820611074678; 6; 143,800007911746; -1; 7,969193; -1; null; null; null; null; null; null; null
@@ -1187,12 +1187,11 @@ Date; BSSID; Level (dbm); Level-based distance (m); RTT distance (mm); Standart;
 2021.09.03 13:48:23.8; 04:BF:6D:37:5C:56; -86; 196,0786; unsupported; Unknown; 2427; Troll; [WPA2-PSK-CCMP][ESS][WPS]; ; ; 56,4857071536705; 84,9822862848726; 16; 140,555927398623; -1; 1,192167; -1; 56,485617349711504; 84,9824955; 25,508; 135,599990844727; 1,333333; -1; -1
 2021.09.03 13:48:23.8; 38:17:66:95:C8:C9; -86; 193,6845; unsupported; Unknown; 2457; FTTX95C8C9; [WPA-PSK-TKIP+CCMP][WPA2-PSK-TKIP+CCMP][ESS][WPS]; ; ; 56,4857071536705; 84,9822862848726; 16; 140,555927398623; -1; 1,192167; -1; 56,485617349711504; 84,9824955; 25,508; 135,599990844727; 1,333333; -1; -1
 2021.09.03 13:48:23.8; 20:E8:82:D5:B5:73; -90; 306,3458; unsupported; Unknown; 2462; Goblin; [WPA-PSK-TKIP+CCMP][WPA2-PSK-TKIP+CCMP][ESS][WPS]; ; ; 56,4857071536705; 84,9822862848726; 16; 140,555927398623; -1; 1,192167; -1; 56,485617349711504; 84,9824955; 25,508; 135,599990844727; 1,333333; -1; -1
-   ```
-
+  ```
 </details>
 
-Now let's use a small data parser for the given sample data.
-For the convenience of accessing the required log field, I use a numbered list of fields:
+Теперь для приведённого примера данных применим небольшой парсер-анализатор данных.
+Для удобства обращения к нужному полю лога использую нумерованный список полей:
 
 0. Date
 1. BSSID
@@ -1221,9 +1220,9 @@ For the convenience of accessing the required log field, I use a numbered list o
 24. Network speed accuracy (m/s)
 
 <details>
-   <summary> Sample parser-analyzer code </summary>
-   
-   ```python
+  <summary>Пример кода парсера-анализатора</summary>
+  
+  ```python
 from datetime import datetime
 
 with open('log_0_.csv', 'r', encoding="utf-8") as file:
@@ -1297,12 +1296,10 @@ print()
 print("Closest AP (2.4) name: " + closest_ap_name)
 print("Closest AP (2.4) distance: " + str(closest_ap_distance))
 print("Closest AP (2.4) time: " + str(closest_ap_time))
-   ```
-   
+  ```
 </details>
 
-The parser given in the example produces the following result on the given example log:
-
+Приведённый в пример парсер на приведённом в пример логе выдаёт следующий результат:
 ```
 Measurements total: 87
 Average visible networks count (2.4 only): 10.885057471264368
@@ -1340,8 +1337,8 @@ Closest AP (2.4) distance: 0.4416952
 Closest AP (2.4) time: 2021-09-03 13:46:59.400000
 ```
 
-As you can see from the code, this parser-analyzer compiles some basic log statistics: the number of scans during the logging period;
-average number of 2.4 GHz access points visible from the operator's smartphone; the maximum number of points in one scan, the time of this scan, the coordinates and the list itself (on the left is the distance to the AP based on the signal strength, on the right is the name of the AP);
-the name of the point closest to the operator's 2.4 GHz route, as well as the distance to it and the fixation time.
+Как можно увидеть по коду, данный парсер-анализатор составляет некую базовую статистику лога: количество сканирований за период логгирования; 
+среднее количество видимых со смартфона оператора точек доступа 2.4 ГГц; максимальное количество точек за одно сканирование время этого сканирования, координаты и сам список (слева дистанция до AP нас основе силы сигнала, справа - имя AP);
+имя ближайшей к маршруту оператора 2.4 ГГц точки, а также расстояние до неё и время фиксации.
 
-Of course, for a real task, the above parser-analyzer is unlikely to be useful, but using its example it is easy to write a parser with the necessary functionality.
+Разумеется, для реальной задачи вышеприведённый парсер-анализатор вряд ли будет полезен, но на его примере несложно написать парсер с необходимым функционалом.
