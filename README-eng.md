@@ -2,6 +2,9 @@
 [![License](https://img.shields.io/badge/LICENSE-GPL%20v3.0-green?style=flat-square)](/LICENSE)  [![Version](https://img.shields.io/badge/VERSION-RELEASE%20--%201.2-green?style=flat-square)](https://github.com/averov90/Simple-Wi-Fi-Logger/releases)
 ### :small_orange_diamond: [Русская версия](/README.md)
 
+
+[<img src="https://seller.samsungapps.com/images/badges/galaxyStore/png_big/GalaxyStore_EnglishEU.png" alt="Get it on Galaxy Store" height="80">](https://galaxy.store/awifilogg)
+
 This program is a tool for capturing and saving a list of Wi-Fi access points visible by a device running Android 5.0 - 11.0+.
 The only task of this program is to save a list of visible networks at a specified time interval (or with the minimum possible interval). In addition, the implementation of this program is simple enough to use as an example of some Android APIs.
 

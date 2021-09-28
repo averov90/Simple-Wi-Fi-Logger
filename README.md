@@ -1,6 +1,9 @@
 # Simple Wi-Fi Logger
 [![License](https://img.shields.io/badge/LICENSE-GPL%20v3.0-green?style=flat-square)](/LICENSE)  [![Version](https://img.shields.io/badge/VERSION-RELEASE%20--%201.2-green?style=flat-square)](https://github.com/averov90/Simple-Wi-Fi-Logger/releases)
-### :small_orange_diamond: [English version](/README-eng.md)
+### :small_orange_diamond: [Go to English version](/README-eng.md)
+
+
+[<img src="https://seller.samsungapps.com/images/badges/galaxyStore/png_big/GalaxyStore_Russian.png" alt="Скачайте в Galaxy Store" height="80">](https://galaxy.store/awifilogg)
 
 Данная программа представляет из себя инструмент захвата и сохранения списка точек доступа Wi-Fi, видимых устройством с операционной системой Android 5.0 - 11.0+.
 Единственная задача данной программы - сохранение списка видимых сетей через заданный интервал времени (или с минимально возможным интервалом). Помимо этого, реализация этой программы достаточно проста, чтобы использовать её в качестве примера работы с некоторыми API Android.
